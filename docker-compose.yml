@@ -1,0 +1,43 @@
+version: "3.9"
+services:
+  redis:
+    image: redis:7
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - app_network
+
+  fastapi:
+    build: ./fastapi_app
+    container_name: fastapi
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+    networks:
+      - app_network
+    env_file:
+      - .env
+
+  cron:
+    build: ./cron
+    container_name: cron
+    depends_on:
+      - fastapi
+    networks:
+      - app_network
+    volumes:
+      - ./cron/logs:/app/logs    # optional, persistent logs
+    environment:
+      - PYTHONUNBUFFERED=1
+    env_file:
+      - .env
+
+volumes:
+  redis_data:
+
+networks:
+  app_network:

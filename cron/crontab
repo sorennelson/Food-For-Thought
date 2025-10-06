@@ -1,0 +1,2 @@
+0 12 * * 5 /usr/local/bin/python /app/scripts/create_week.py >> /app/logs/create_week.log 2>&1
+10 12 * * 1-7 /usr/local/bin/python /app/scripts/create_day.py >> /app/logs/create_day.log 2>&1
