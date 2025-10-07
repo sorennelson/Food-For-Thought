@@ -1,4 +1,3 @@
-version: "3.9"
 services:
   redis:
     image: redis:7
@@ -9,6 +8,8 @@ services:
       - redis_data:/data
     networks:
       - app_network
+    command: ["redis-server", "--maxmemory", "50mb", "--maxmemory-policy", "allkeys-lru"]
+    mem_limit: 64m
 
   fastapi:
     build: ./fastapi_app
@@ -21,6 +22,7 @@ services:
       - app_network
     env_file:
       - .env
+    mem_limit: 256m
 
   cron:
     build: ./cron
@@ -35,6 +37,7 @@ services:
       - PYTHONUNBUFFERED=1
     env_file:
       - .env
+    mem_limit: 128m
 
 volumes:
   redis_data:
