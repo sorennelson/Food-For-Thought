@@ -16,6 +16,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY scripts/ ./scripts/
 COPY crontab /etc/cron.d/my-cron
 COPY start_cron.sh .
+COPY .env .
 
 # Give execution rights
 RUN chmod 0644 /etc/cron.d/my-cron

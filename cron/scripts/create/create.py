@@ -1,4 +1,5 @@
-import requests, os
+import requests, os, dotenv
+dotenv.load_dotenv()
 
 FASTAPI_HOST = "fastapi"
 FASTAPI_PORT = 8000
